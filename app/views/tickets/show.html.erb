@@ -1,0 +1,22 @@
+<h3><%= @ticket.request_number %></h3>
+
+<div id="map" data-ticket-json="<%= ticket_path(@ticket, format: :json) %>"></div>
+
+<h4>Ticket:</h4>
+<dl>
+  <% @ticket.attributes.each do |attr, value| %>
+    <dt><%= attr %>:</dt>
+    <dd><%= value %></dd>
+  <% end %>
+</dl>
+
+<h4>Excavator:</h4>
+<dl>
+  <% @ticket.excavator.attributes.each do |attr, value| %>
+    <dt><%= attr %>:</dt>
+    <dd><%= value %></dd>
+  <% end %>
+</dl>
+
+<script src="https://maps.googleapis.com/maps/api/js?&callback=initMap" async defer></script>
+
