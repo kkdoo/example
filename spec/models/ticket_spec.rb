@@ -42,10 +42,18 @@ describe Ticket, type: :model do
     end
   end
 
-  it '#with_poly scope' do
-    ticket = create(:ticket)
-    polyfied = Ticket.with_poly.find(ticket.id)
-    expect(polyfied.poly).to be_kind_of(RGeo::Geos::CAPIPolygonImpl)
+  describe '#with_poly scope' do
+    it 'when it has well_known_text' do
+      ticket = create(:ticket)
+      polyfied = Ticket.with_poly.find(ticket.id)
+      expect(polyfied.poly).to be_kind_of(RGeo::Geos::CAPIPolygonImpl)
+    end
+
+    it 'when well_known_text is empty' do
+      ticket = create(:ticket, well_known_text: nil)
+      polyfied = Ticket.with_poly.find(ticket.id)
+      expect(polyfied.poly).to eq(nil)
+    end
   end
 
   it '#poly_json' do
