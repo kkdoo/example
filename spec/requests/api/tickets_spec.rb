@@ -32,7 +32,7 @@ describe 'Tickets API' do
 
       it 'due to wrong json' do
         expect {
-          post '/api/tickets', params: '{}'
+          post '/api/tickets', params: '{a}'
         }.to_not change { Ticket.count }
       end
 
