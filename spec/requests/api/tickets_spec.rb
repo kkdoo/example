@@ -34,12 +34,14 @@ describe 'Tickets API' do
         expect {
           post '/api/tickets', params: '{a}'
         }.to_not change { Ticket.count }
+        expect(response.status).to eq(400)
       end
 
       it 'due to validations' do
         expect {
           post '/api/tickets', params: '{}'
         }.to_not change { Ticket.count }
+        expect(response.status).to eq(400)
       end
     end
   end
