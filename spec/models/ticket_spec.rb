@@ -22,8 +22,11 @@ describe Ticket, type: :model do
       ['asd', '123', '-12321', '31231-', 'asd321-312', '321-asd321'].each do |value|
         subject.request_number = value
         is_expected.to_not be_valid
+        expect(subject.errors.messages[:request_number]).to include('is invalid')
       end
       subject.request_number = '123-321'
+      subject.valid?
+      expect(subject.errors.messages[:request_number]).to be_empty
     end
   end
 
