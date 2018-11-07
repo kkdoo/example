@@ -15,6 +15,23 @@ describe Ticket, type: :model do
   it { should validate_inclusion_of(:request_type).in_array(Ticket::REQUEST_TYPES) }
   it { should validate_uniqueness_of(:sequence_number) }
 
+  context '#well_known_text' do
+    let(:subject) { build(:ticket) }
+
+    it 'has valid geometry' do
+      subject.well_known_text = "POLYGON((-81.13390268058475 32.07206917625161,-81.14660562247929 32.04064386441295,-81.08858407706913 32.02259853170128,-81.05322183341679 32.02434500961698,-81.05047525138554 32.042681017283066,-81.0319358226746 32.06537765335268,-81.01202310294804 32.078469305179404,-81.02850259513554 32.07963291684719,-81.07759774894413 32.07090546831167,-81.12154306144413 32.08806865844325,-81.13390268058475 32.07206917625161))"
+      is_expected.to be_valid
+    end
+
+    it 'is not valid', cleaner: :truncation do
+      ['', "POLYGON((-81.13390268058475 32.07206917625161))"].each do |value|
+        subject.well_known_text = value
+        is_expected.to_not be_valid
+        expect(subject.errors[:well_known_text]).to eq(["is invalid"])
+      end
+    end
+  end
+
   context '#request_number' do
     let(:subject) { build(:ticket) }
 

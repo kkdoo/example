@@ -63,4 +63,5 @@ gem 'jquery-rails'
 group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
+  gem 'database_cleaner'
 end
